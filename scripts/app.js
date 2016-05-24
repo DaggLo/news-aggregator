@@ -256,6 +256,7 @@ APP.Main = (function() {
 
     var storyElements = document.querySelectorAll('.story');
     var height = main.offsetHeight;
+    var mainPosition = main.getBoundingClientRect();
 
     // It does seem awfully broad to change all the
     // colors every time!
@@ -266,11 +267,11 @@ APP.Main = (function() {
       var title = story.querySelector('.story__title');
 
       // Base the scale on the y position of the score.
-      var mainPosition = main.getBoundingClientRect();
       var scoreLocation = score.getBoundingClientRect().top -
           document.body.getBoundingClientRect().top;
       var scale = Math.min(1, 1 - (0.05 * ((scoreLocation - 170) / height)));
-      var opacity = Math.min(1, 1 - (0.5 * ((scoreLocation - 170) / height)));
+      // var opacity = Math.min(1, 1 - (0.5 * ((scoreLocation - 170) / height)));
+      var opacity = scale;
 
       score.style.width = (scale * 40) + 'px';
       score.style.height = (scale * 40) + 'px';
