@@ -272,14 +272,15 @@ APP.Main = (function() {
       var scale = Math.min(1, 1 - (0.05 * ((scoreLocation - 170) / height)));
       // var opacity = Math.min(1, 1 - (0.5 * ((scoreLocation - 170) / height)));
       var opacity = scale;
+      var scoreWidth = scale * 40;
 
-      score.style.width = (scale * 40) + 'px';
-      score.style.height = (scale * 40) + 'px';
-      score.style.lineHeight = (scale * 40) + 'px';
+      score.style.width = scoreWidth + 'px';
+      score.style.height = scoreWidth + 'px';
+      score.style.lineHeight = scoreWidth + 'px';
 
       // Now figure out how wide it is and use that to saturate it.
-      scoreLocation = score.getBoundingClientRect();
-      var saturation = (100 * ((scoreLocation.width - 38) / 2));
+      //scoreLocation = score.getBoundingClientRect();
+      var saturation = (100 * ((scoreWidth - 38) / 2));
 
       score.style.backgroundColor = 'hsl(42, ' + saturation + '%, 50%)';
       title.style.opacity = opacity;
