@@ -257,6 +257,7 @@ APP.Main = (function() {
     var storyElements = document.querySelectorAll('.story');
     var height = main.offsetHeight;
     var mainPosition = main.getBoundingClientRect();
+    var line = [];
 
     // It does seem awfully broad to change all the
     // colors every time!
@@ -274,16 +275,24 @@ APP.Main = (function() {
       var opacity = scale;
       var scoreWidth = scale * 40;
 
-      score.style.width = scoreWidth + 'px';
-      score.style.height = scoreWidth + 'px';
-      score.style.lineHeight = scoreWidth + 'px';
-
       // Now figure out how wide it is and use that to saturate it.
       //scoreLocation = score.getBoundingClientRect();
       var saturation = (100 * ((scoreWidth - 38) / 2));
 
-      score.style.backgroundColor = 'hsl(42, ' + saturation + '%, 50%)';
-      title.style.opacity = opacity;
+      line.push([scoreWidth, saturation, opacity]);
+    }
+
+    for (s = 0; s < storyElements.length; s++) {
+
+      story = storyElements[s];
+      score = story.querySelector('.story__score');
+      title = story.querySelector('.story__title');
+
+      score.style.width = line[s][0] + 'px';
+      score.style.height = line[s][0] + 'px';
+      score.style.lineHeight = line[s][0] + 'px';
+      score.style.backgroundColor = 'hsl(42, ' + line[s][1] + '%, 50%)';
+      title.style.opacity = line[s][2];
     }
   }
 
