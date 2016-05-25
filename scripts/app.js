@@ -308,7 +308,10 @@ APP.Main = (function() {
 
     var header = $('header');
     var headerTitles = header.querySelector('.header__title-wrapper');
-    var scrollTopCapped = Math.min(70, main.scrollTop);
+    var scrollTop = main.scrollTop;
+    var scrollHeight = main.scrollHeight;
+    var offsetHeight = main.offsetHeight;
+    var scrollTopCapped = Math.min(70, scrollTop);
     var scaleString = 'scale(' + (1 - (scrollTopCapped / 300)) + ')';
 
     colorizeAndScaleStories();
@@ -318,15 +321,15 @@ APP.Main = (function() {
     headerTitles.style.transform = scaleString;
 
     // Add a shadow to the header.
-    if (main.scrollTop > 70)
+    if (scrollTop > 70)
       document.body.classList.add('raised');
     else
       document.body.classList.remove('raised');
 
     // Check if we need to load the next batch of stories.
-    var loadThreshold = (main.scrollHeight - main.offsetHeight -
+    var loadThreshold = (scrollHeight - offsetHeight -
         LAZY_LOAD_THRESHOLD);
-    if (main.scrollTop > loadThreshold)
+    if (scrollTop > loadThreshold)
       loadStoryBatch();
   });
 
