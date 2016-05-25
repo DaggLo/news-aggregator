@@ -191,7 +191,7 @@ APP.Main = (function() {
 
       // Set up the next bit of the animation if there is more to do.
       if (Math.abs(left) > 0.5)
-        setTimeout(animate, 4);
+        window.requestAnimationFrame(animate);
       else
         left = 0;
 
@@ -204,7 +204,7 @@ APP.Main = (function() {
     // every few milliseconds. That's going to keep
     // it all tight. Or maybe we're doing visual changes
     // and they should be in a requestAnimationFrame
-    setTimeout(animate, 4);
+    window.requestAnimationFrame(animate);
   }
 
   function hideStory(id) {
@@ -230,7 +230,7 @@ APP.Main = (function() {
 
       // Set up the next bit of the animation if there is more to do.
       if (Math.abs(left - target) > 0.5) {
-        setTimeout(animate, 4);
+        window.requestAnimationFrame(animate);
       } else {
         left = target;
         inDetails = false;
@@ -245,7 +245,7 @@ APP.Main = (function() {
     // every few milliseconds. That's going to keep
     // it all tight. Or maybe we're doing visual changes
     // and they should be in a requestAnimationFrame
-    setTimeout(animate, 4);
+    window.requestAnimationFrame(animate);
   }
 
   /**
@@ -255,17 +255,19 @@ APP.Main = (function() {
   function colorizeAndScaleStories() {
 
     var storyElements = document.querySelectorAll('.story');
-    var height = main.offsetHeight;
-    var mainPosition = main.getBoundingClientRect();
+
     var lines = [];
     var entity = [];
-    var bodyTop = document.body.getBoundingClientRect().top;
+
 
     // It does seem awfully broad to change all the
     // colors every time!
     for (var s = 0; s < storyElements.length; s++) {
 
       var story = storyElements[s];
+      var height = main.offsetHeight;
+      var mainPosition = main.getBoundingClientRect();
+      var bodyTop = document.body.getBoundingClientRect().top;
 
       lines.push({});
       lines[s].score = story.querySelector('.story__score');
