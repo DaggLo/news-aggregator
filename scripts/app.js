@@ -257,21 +257,23 @@ APP.Main = (function() {
     var storyElements = document.querySelectorAll('.story');
     var height = main.offsetHeight;
     var mainPosition = main.getBoundingClientRect();
-    var line = [];
+    var lines = [];
+    var entity = [];
+    var bodyTop = document.body.getBoundingClientRect().top;
 
     // It does seem awfully broad to change all the
     // colors every time!
     for (var s = 0; s < storyElements.length; s++) {
 
       var story = storyElements[s];
-      var score = story.querySelector('.story__score');
-      var title = story.querySelector('.story__title');
+
+      lines.push({});
+      lines[s].score = story.querySelector('.story__score');
+      lines[s].title = story.querySelector('.story__title');
 
       // Base the scale on the y position of the score.
-      var scoreLocation = score.getBoundingClientRect().top -
-          document.body.getBoundingClientRect().top;
+      var scoreLocation = lines[s].score.getBoundingClientRect().top - bodyTop;
       var scale = Math.min(1, 1 - (0.05 * ((scoreLocation - 170) / height)));
-      // var opacity = Math.min(1, 1 - (0.5 * ((scoreLocation - 170) / height)));
       var opacity = scale;
       var scoreWidth = scale * 40;
 
@@ -279,20 +281,16 @@ APP.Main = (function() {
       //scoreLocation = score.getBoundingClientRect();
       var saturation = (100 * ((scoreWidth - 38) / 2));
 
-      line.push([scoreWidth, saturation, opacity]);
+      entity.push([scoreWidth, saturation, opacity]);
     }
 
     for (s = 0; s < storyElements.length; s++) {
 
-      story = storyElements[s];
-      score = story.querySelector('.story__score');
-      title = story.querySelector('.story__title');
-
-      score.style.width = line[s][0] + 'px';
-      score.style.height = line[s][0] + 'px';
-      score.style.lineHeight = line[s][0] + 'px';
-      score.style.backgroundColor = 'hsl(42, ' + line[s][1] + '%, 50%)';
-      title.style.opacity = line[s][2];
+      lines[s].score.style.width = entity[s][0] + 'px';
+      lines[s].score.style.height = entity[s][0] + 'px';
+      lines[s].score.style.lineHeight = entity[s][0] + 'px';
+      lines[s].score.style.backgroundColor = 'hsl(42, ' + entity[s][1] + '%, 50%)';
+      lines[s].title.style.opacity = entity[s][2];
     }
   }
 
